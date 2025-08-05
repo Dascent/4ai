@@ -10,17 +10,17 @@ This repository contains the front-end code for a simple web application designe
 
 ## Table of Contents
 
--   [Project Description](README.md#project-description "null")
+-   [Project Description](#project-description "null")
     
--   [Features](README.md#features "null")
+-   [Features](#features "null")
     
--   [How It Works (Focus on `script.js`)](README.md#how-it-works-focus-on-scriptjs "null")
+-   [How It Works (Focus on `script.js`)](#how-it-works-focus-on-scriptjs "null")
     
--   [Setup and Usage](README.md#setup-and-usage "null")
+-   [Setup and Usage](#setup-and-usage "null")
     
--   [Future Enhancements](README.md#future-enhancements "null")
+-   [Future Enhancements](#future-enhancements "null")
     
--   [Limitations](README.md#limitations "null")
+-   [Limitations](#limitations "null")
     
 
 ## Project Description
@@ -410,3 +410,4 @@ To transform this front-end template into a fully functional AI image detector, 
     
 
 -   **Basic Styling:** The CSS provides basic styling, but a production-ready application would require more polished design.
+
