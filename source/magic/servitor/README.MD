@@ -1,4 +1,5 @@
-#Servitor Construction
+##Servitor Construction
+
 A "One Page WebApp"
 
 This webapp is designed and coded by [Gemini Ai](https://wiki.dascent-sigils.com/index.php/Ai/Gemini) and serve the purpose of helping with construction of magical Servitors.
