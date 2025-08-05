@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Detector</title>
+    <style>
+	body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+.input-section {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upload-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.upload-btn:hover {
+    background-color: #0056b3;
+}
+
+#image-upload {
+    display: none;
+}
+
+#image-url {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#detect-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+#detect-btn:hover {
+    background-color: #218838;
+}
+
+.image-preview-container {
+    margin-top: 20px;
+    border: 1px dashed #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#image-preview {
+    max-width: 100%;
+    max-height: 400px;
+    display: none;
+}
+
+.result-section {
+    margin-top: 20px;
+}
+
+#result-text {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #555;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Image Detector</h1>
+        <div class="input-section">
+            <label for="image-upload" class="upload-btn">Choose File</label>
+            <input type="file" id="image-upload" accept="image/*">
+            <p>or</p>
+            <input type="text" id="image-url" placeholder="Enter Image URL">
+            <button id="detect-btn">Detect</button>
+        </div>
+        <div class="image-preview-container">
+            <img id="image-preview" src="#" alt="Image Preview">
+        </div>
+        <div class="result-section">
+            <h2>Detection Result:</h2>
+            <p id="result-text">Please upload an image or enter a URL to get started.</p>
+        </div>
+    </div>
+    <script>
+	document.addEventListener('DOMContentLoaded', () => {
+    const imageUpload = document.getElementById('image-upload');
+    const imageUrl = document.getElementById('image-url');
+    const detectBtn = document.getElementById('detect-btn');
+    const imagePreview = document.getElementById('image-preview');
+    const resultText = document.getElementById('result-text');
+
+    // Function to display the image preview
+    function showImage(source) {
+        imagePreview.src = source;
+        imagePreview.style.display = 'block';
+    }
+
+    // Handle image file upload
+    imageUpload.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                showImage(e.target.result);
+                // Clear URL input when a file is uploaded
+                imageUrl.value = '';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Handle image URL input
+    imageUrl.addEventListener('input', (event) => {
+        const url = event.target.value;
+        if (url) {
+            // Attempt to show the image from the URL. A simple check.
+            showImage(url);
+            // Clear file input when a URL is entered
+            imageUpload.value = '';
+        } else {
+            imagePreview.style.display = 'none';
+        }
+    });
+
+    // Handle the "Detect" button click
+    detectBtn.addEventListener('click', () => {
+        // Placeholder for the AI detection logic.
+        // This is where you would call an external API or service.
+        // For this example, we'll just show a loading state and a static result.
+
+        const source = imagePreview.src;
+        if (source === '#' || !source) {
+            resultText.textContent = "Please upload an image or enter a URL first.";
+            resultText.style.color = 'red';
+            return;
+        }
+
+        resultText.textContent = "Analyzing image... (This is a placeholder)";
+        resultText.style.color = '#555';
+
+        // Simulate an API call
+        setTimeout(() => {
+            // Here you would get the real result from your AI detection service.
+            // For example, if the API returned a JSON object like { is_ai: true, confidence: 0.95 }
+            const isAI = Math.random() > 0.5; // Randomly decide for demonstration purposes
+            if (isAI) {
+                resultText.textContent = "Result: This image is likely AI-generated.";
+                resultText.style.color = '#dc3545'; // Red for AI
+            } else {
+                resultText.textContent = "Result: This image is likely real.";
+                resultText.style.color = '#28a745'; // Green for real
+            }
+        }, 2000); // Simulate a 2-second API response time
+    });
+});
+    </script>
+</body>
+</html>
