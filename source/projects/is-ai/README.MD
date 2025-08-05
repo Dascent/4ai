@@ -1,22 +1,26 @@
 # AI Image Detector (Front-End Template)
 
+**Open Source project**
+
 This repository contains the front-end code for a simple web application designed to allow users to upload images or provide image URLs and preview them. It includes a placeholder for future integration with an actual AI image detection service, demonstrating the user interface and basic client-side logic.
 
 **Please Note:** This application currently provides a **simulated** AI detection result. It does **not** connect to a real AI model to determine if an image is AI-generated. The "detection" functionality is a placeholder for demonstration purposes and would require integration with a robust backend AI service for actual functionality.
 
+[Online Demo](https://dascent.github.io/4ai/source/projects/is-ai/)
+
 ## Table of Contents
 
--   [Project Description](https://www.google.com/search?q=%23project-description "null")
+-   [Project Description](README.md#project-description "null")
     
--   [Features](https://www.google.com/search?q=%23features "null")
+-   [Features](README.md#features "null")
     
--   [How It Works (Focus on `script.js`)](https://www.google.com/search?q=%23how-it-works-focus-on-scriptjs "null")
+-   [How It Works (Focus on `script.js`)](README.md#how-it-works-focus-on-scriptjs "null")
     
--   [Setup and Usage](https://www.google.com/search?q=%23setup-and-usage "null")
+-   [Setup and Usage](README.md#setup-and-usage "null")
     
--   [Future Enhancements](https://www.google.com/search?q=%23future-enhancements "null")
+-   [Future Enhancements](README.md#future-enhancements "null")
     
--   [Limitations](https://www.google.com/search?q=%23limitations "null")
+-   [Limitations](README.md#limitations "null")
     
 
 ## Project Description
@@ -404,4 +408,5 @@ To transform this front-end template into a fully functional AI image detector, 
     
 -   **No Server Interaction:** There is no backend server or database connected to this application.
     
+
 -   **Basic Styling:** The CSS provides basic styling, but a production-ready application would require more polished design.
