@@ -1,0 +1,394 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Servitor Construction Template</title>
+<style>
+body {
+    margin: 0 auto;
+    font-family: sans-serif;
+    color: #333;
+}
+.container {
+    display: block;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+h3 {
+    font-size: 2em;
+    color: #900;
+    text-align: center;
+    margin-bottom: 30px;
+}
+section {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 20px auto;
+    background-color: #f9f9f9;
+    padding: 1.5em;
+    box-sizing: border-box;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+    /* break-inside: avoid is less effective here, we'll control with JS */
+    /* break-inside: avoid; */
+    /* page-break-inside: avoid; */
+    /* -webkit-column-break-inside: avoid; */
+}
+p {
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #555;
+}
+textarea.oneline {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 6px;
+    margin-bottom: 15px;
+    max-height: 50px;
+    min-height: 50px;
+    min-width: 100%;
+    max-width: 100%;
+    outline: none;
+    padding: .7em;
+    box-shadow: inset 0 1px 4px #ccc;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: vertical;
+}
+textarea.multiline {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 6px;
+    margin-bottom: 15px;
+    max-height: 400px;
+    min-height: 200px;
+    min-width: 100%;
+    max-width: 100%;
+    outline: none;
+    padding: .7em;
+    box-shadow: inset 0 1px 4px #ccc;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: vertical;
+}
+textarea.oneline:focus,
+textarea.multiline:focus {
+    box-shadow: inset 0 1px 4px #ccc, 0 0 5px rgba(153, 0, 0, 0.5);
+    border-color: #900;
+}
+.image-upload-area {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color: #eee;
+    cursor: pointer;
+}
+.image-upload-area:hover {
+    border-color: #900;
+    background-color: #e0e0e0;
+}
+.image-display {
+    max-width: 100%;
+    height: auto;
+    margin-top: 15px;
+    display: block;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+    /* break-inside: avoid is less effective here, we'll control with JS */
+    /* break-inside: avoid; */
+    /* page-break-inside: avoid; */
+    /* -webkit-column-break-inside: avoid; */
+}
+.button-container {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+button {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    background-color: #900;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+button:hover {
+    background-color: #b00;
+}
+
+/* New CSS for PDF display content */
+.pdf-text-content {
+    display: none;
+    padding: .7em;
+    min-height: 50px; /* Adjusted min-height to match oneline/multiline for consistency */
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin-top: 6px;
+    margin-bottom: 15px;
+
+    /* break-inside: avoid is less effective here, we'll control with JS */
+    /* break-inside: avoid; */
+    /* page-break-inside: avoid; */
+    /* -webkit-column-break-inside: avoid; */
+}
+@media only screen and (min-width: 150px) and (max-width: 968px) {}
+.credits{display:block;width:90%;height:auto;margin:10px auto 12px auto;padding:2em 0 0;text-align:center;font-size:14px;color:#444;}.credits a{color:#036;text-decoration:none;}.credits a:hover{color:#900;text-decoration:none;}
+</style>
+</head>
+
+<body>
+<div class="container" id="pdf-container-root">
+    <h3 id="servitor-title">Servitor Construction Template</h3>
+
+    <section data-pdf-section>
+        <p class="servitor-name">Servitor Name:</p>
+        <textarea class="oneline" placeholder="Enter Servitor's Name"></textarea>
+        <div class="pdf-text-content"></div>
+    </section>
+
+    <section data-pdf-section>
+        <p class="servitor-purpose">Purpose / Intention:</p>
+        <textarea class="multiline" placeholder="Describe the Servitor's primary purpose or intention"></textarea>
+        <div class="pdf-text-content"></div>
+    </section>
+
+    <section data-pdf-section>
+        <p class="servitor-sigil">Symbol / Sigil:</p>
+        <div class="image-upload-area" id="sigil-upload-area">
+            Drag & Drop or Click to Upload Sigil Image
+            <input type="file" id="sigil-input" accept="image/*" style="display: none;">
+        </div>
+        <img id="sigil-display" class="image-display" src="#" alt="Sigil Image" style="display: none;">
+    </section>
+
+    <section data-pdf-section>
+        <p class="servitor-personality">Personality Traits:</p>
+        <textarea class="oneline" placeholder="Describe key personality traits"></textarea>
+        <div class="pdf-text-content"></div>
+    </section>
+
+    <section data-pdf-section>
+        <p class="servitor-task">Assigned Task(s):</p>
+        <textarea class="multiline" placeholder="Detail the specific tasks or functions the Servitor will perform"></textarea>
+        <div class="pdf-text-content"></div>
+    </section>
+
+    <section data-pdf-section>
+        <p class="servitor-housing">Housing / Containment Location:</p>
+        <textarea class="multiline" placeholder="Specify where the Servitor will reside or be contained"></textarea>
+        <div class="pdf-text-content"></div>
+    </section>
+
+    <section data-pdf-section>
+        <p class="servitor-charging">Charging Ritual Description:</p>
+        <textarea class="multiline" placeholder="Outline the ritual or method for charging the Servitor"></textarea>
+        <div class="pdf-text-content"></div>
+    </section>
+
+    <section data-pdf-section>
+        <p class="servitor-banishing">Banishing Protocol (if needed):</p>
+        <textarea class="multiline" placeholder="Describe how to banish or de-manifest the Servitor, if necessary"></textarea>
+        <div class="pdf-text-content"></div>
+    </section>
+
+    <section data-pdf-section>
+        <p class="servitor-notes">Additional Notes / Observations:</p>
+        <textarea class="multiline" placeholder="Any other relevant notes or observations"></textarea>
+        <div class="pdf-text-content"></div>
+    </section>
+
+    <div class="button-container">
+        <button id="save-pdf-button">Save as PDF</button>
+    </div>
+
+</div>
+
+
+<div class="credits">
+<p><a href="https://wiki.dascent-sigils.com/index.php?title=Downloadable_Grimoire_Template">Wiki.Dascent-Sigils.Com</a></p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+    // Sigil Image Upload Logic (unchanged)
+    const sigilUploadArea = document.getElementById('sigil-upload-area');
+    const sigilInput = document.getElementById('sigil-input');
+    const sigilDisplay = document.getElementById('sigil-display');
+
+    sigilUploadArea.addEventListener('click', () => {
+        sigilInput.click();
+    });
+
+    sigilInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                sigilDisplay.src = e.target.result;
+                sigilDisplay.style.display = 'block';
+            };
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+
+    sigilUploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        sigilUploadArea.style.borderColor = '#900';
+    });
+
+    sigilUploadArea.addEventListener('dragleave', () => {
+        sigilUploadArea.style.borderColor = '#ccc';
+    });
+
+    sigilUploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        sigilUploadArea.style.borderColor = '#ccc';
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                sigilDisplay.src = ev.target.result;
+                sigilDisplay.style.display = 'block';
+            };
+            reader.readAsDataURL(e.dataTransfer.files[0]);
+        }
+    });
+
+    // Save as PDF Logic (completely revised for better page break control)
+    document.getElementById('save-pdf-button').addEventListener('click', async () => {
+        const saveButton = document.getElementById('save-pdf-button');
+        const multilineTextareas = document.querySelectorAll('textarea.multiline');
+        const onelineTextareas = document.querySelectorAll('textarea.oneline'); // Also handle oneline textareas
+        const pdfTextContents = document.querySelectorAll('.pdf-text-content');
+        const sigilImageSection = document.getElementById('sigil-upload-area');
+        const sigilDisplayImg = document.getElementById('sigil-display');
+        const servitorTitle = document.getElementById('servitor-title');
+        const sectionsToPrint = document.querySelectorAll('[data-pdf-section]'); // Select all sections to print
+
+
+        // Store original display states to revert after PDF generation
+        const originalDisplays = [];
+
+        // --- Step 1: Prepare the content for PDF capture ---
+
+        // Hide the button
+        saveButton.style.display = 'none';
+        originalDisplays.push({element: saveButton, display: 'block'}); // Store original state
+
+        // Hide the image upload area
+        originalDisplays.push({element: sigilImageSection, display: sigilImageSection.style.display});
+        sigilImageSection.style.display = 'none';
+
+        // Process textareas: hide textareas and show their content in pdf-text-content divs
+        [...onelineTextareas, ...multilineTextareas].forEach((textarea, index) => {
+            // Find the *next sibling* div.pdf-text-content for the textarea
+            // If the textarea has a sibling div for PDF content, use it.
+            // Otherwise, for oneline textareas that don't have a dedicated pdf-text-content div after them
+            // we will create one temporarily, or just manage their display directly.
+            let pdfContentDiv = textarea.nextElementSibling;
+            if (!pdfContentDiv || !pdfContentDiv.classList.contains('pdf-text-content')) {
+                // For oneline textareas, or if a div doesn't exist, create a temporary one for rendering
+                pdfContentDiv = document.createElement('div');
+                pdfContentDiv.classList.add('pdf-text-content');
+                // Make sure it looks like the oneline for consistency in PDF
+                pdfContentDiv.style.minHeight = '50px'; // Match oneline textarea height
+                textarea.parentNode.insertBefore(pdfContentDiv, textarea.nextElementSibling);
+            }
+
+            pdfContentDiv.textContent = textarea.value;
+            originalDisplays.push({element: textarea, display: textarea.style.display});
+            originalDisplays.push({element: pdfContentDiv, display: pdfContentDiv.style.display});
+
+            textarea.style.display = 'none';
+            pdfContentDiv.style.display = 'block';
+        });
+
+
+        // --- Step 2: Generate PDF content segment by segment ---
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const margin = 10; // Page margin in mm
+        const pageWidth = pdf.internal.pageSize.getWidth(); // A4 width (210mm)
+        let cursorY = margin; // Current Y position on the PDF page
+
+        const addPageIfNeeded = (elementHeight) => {
+            const remainingSpace = pdf.internal.pageSize.getHeight() - cursorY - margin;
+            if (elementHeight > remainingSpace) {
+                pdf.addPage();
+                cursorY = margin; // Reset cursor to top of new page
+            }
+        };
+
+        // Add the main title first
+        await html2canvas(servitorTitle, { scale: 2 }).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const imgWidth = pageWidth - (2 * margin);
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+            addPageIfNeeded(imgHeight);
+            pdf.addImage(imgData, 'PNG', margin, cursorY, imgWidth, imgHeight);
+            cursorY += imgHeight + 15; // Add some space after title
+        });
+
+
+        for (const section of sectionsToPrint) {
+            // Check if the sigil image is part of this section. If it's displayed, html2canvas will pick it up.
+            // If the section contains the sigil display image and it's visible, html2canvas will render it.
+            // No specific manipulation for sigilDisplayImg is needed here beyond its default display state.
+            // The image-upload-area is already hidden above.
+
+            await html2canvas(section, { scale: 2, useCORS: true }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = pageWidth - (2 * margin);
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+                addPageIfNeeded(imgHeight); // Check if this section fits on current page
+                pdf.addImage(imgData, 'PNG', margin, cursorY, imgWidth, imgHeight);
+                cursorY += imgHeight + 10; // Add some space between sections
+            });
+        }
+
+        pdf.save('Servitor_Template.pdf');
+
+
+        // --- Step 3: Revert changes in the DOM after PDF generation ---
+
+        // Revert displays
+        originalDisplays.forEach(item => {
+            item.element.style.display = item.display;
+        });
+
+        // Clean up temporarily created pdf-text-content divs for oneline textareas
+        document.querySelectorAll('.pdf-text-content').forEach(div => {
+            // If the div was dynamically created (e.g., for oneline textarea without an original sibling)
+            // and it's empty, we might remove it. Or, more robustly, only remove if it's not the original for multiline.
+            // For simplicity, we assume only multiline had them originally, and we created for oneline.
+            if (div.style.minHeight === '50px' && !div.previousElementSibling.classList.contains('multiline')) {
+                 if (div.previousElementSibling && div.previousElementSibling.classList.contains('oneline')) {
+                     div.parentNode.removeChild(div);
+                 }
+            }
+        });
+
+    });
+</script>
+</body>
+</html>
