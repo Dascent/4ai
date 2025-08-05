@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Metadata Reader</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Image Metadata Reader</h1>
+        <p>Drag & drop an image, or paste a URL below to view its metadata.</p>
+
+        <div class="input-container">
+            <div id="drop-area" class="drop-area">
+                <p>Drag and drop your image here</p>
+                <input type="file" id="fileElem" accept="image/*" style="display: none;">
+                <label class="button" for="fileElem">or select a file</label>
+            </div>
+
+            <div class="url-input">
+                <input type="text" id="image-url" placeholder="Paste image URL here">
+                <button id="load-url-btn">Load Image</button>
+            </div>
+        </div>
+
+        <div id="image-preview-container" class="image-preview-container">
+            <img id="image-preview" class="hidden" alt="Image preview">
+        </div>
+
+        <div id="metadata-output" class="metadata-output hidden">
+            <h2>Image Metadata</h2>
+            <div class="metadata-section">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Attribute</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody id="metadata-table-body">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="error-message" class="error-message hidden"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

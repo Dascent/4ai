@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Metadata Reader</title>
+    <link rel="stylesheet" href="style-v2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Image Metadata Reader</h1>
+        <p>Drag & drop an image, or paste a URL below to view its metadata.</p>
+
+        <div class="input-container">
+            <div id="drop-area" class="drop-area">
+                <p>Drag and drop your image here</p>
+                <input type="file" id="fileElem" accept="image/*" style="display: none;">
+                <label class="button" for="fileElem">or select a file</label>
+            </div>
+            <div class="url-input">
+                <input type="text" id="image-url" placeholder="Paste image URL here">
+                <button id="load-url-btn">Load Image</button>
+            </div>
+        </div>
+
+        <div id="result-container" class="hidden">
+            <div id="image-info-panel">
+                <div class="image-wrapper">
+                    <img id="image-preview" alt="Image preview">
+                    <div class="file-info">
+                        <span id="file-name"></span>
+                        <div class="action-buttons">
+                            <button class="button small-btn" onclick="location.reload()">
+                                <i class="fas fa-upload"></i> Upload another image
+                            </button>
+                            <button id="remove-metadata-btn" class="button small-btn">
+                                <i class="fas fa-trash-alt"></i> Remove metadata
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metadata-grid">
+                    <div class="metadata-block">
+                        <div class="block-header">Image Metadata</div>
+                        <div class="block-content">
+                            <table id="image-metadata-table">
+                                <tbody>
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="metadata-block">
+                        <div class="block-header">Copyright</div>
+                        <div class="block-content">
+                            <table id="copyright-metadata-table">
+                                <tbody>
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="metadata-block">
+                        <div class="block-header">Location</div>
+                        <div class="block-content" id="location-content">
+                            <p id="location-text">We can't find where it was taken.</p>
+                            <button id="show-map-btn" class="button small-btn hidden">
+                                <i class="fas fa-map-marker-alt"></i> Show on map
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="full-metadata-block" class="metadata-block full-width">
+                <div class="block-header">Full metadata</div>
+                <div class="block-content">
+                    <table id="full-metadata-table">
+                        <tbody>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="error-message" class="error-message hidden"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+    <script src="script-v2.js"></script>
+</body>
+</html>
