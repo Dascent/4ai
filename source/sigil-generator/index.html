@@ -1,0 +1,159 @@
+<html lang="en-EN" class="no-js" itemtype="https://schema.org/WebPage" itemscope>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+	<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+	<title>Dascentian Magic Sigil Creator</title>
+	<meta name="description" content="Dascentian Magic Sigil Generator allow to create online sigils for free"/>
+	<link rel="canonical" href="https://dascent-sigils.com/"/>
+	<meta property="og:locale" content="en_EN"/>
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="Magick starts here - Dascent Sigils"/>
+	<meta property="og:description" content="Magic Sigils is a website dedicated to providing information and resources on the ancient practice of creating and using sigils for personal and spiritual growth. Our site features a wealth of knowledge on the history and origins of sigils, as well as tutorials on how to design and activate your own sigils for specific intentions. Whether you're a seasoned practitioner or just starting out, Magic Sigils has everything you need to enhance your spiritual journey and tap into the power of sigil magic."/>
+	<meta property="og:url" content="https://dascent.github.io/magic-sigils/"/>
+	<meta property="og:site_name" content="Magic Sigils"/>
+	<meta property="article:publisher" content="https://www.facebook.com/dascent.one"/>
+	<meta property="og:image" content="https://raw.githubusercontent.com/Dascent/magic-sigils/main/designxprocover.jpg"/>
+	<meta property="og:image:width" content="1210"/>
+	<meta property="og:image:height" content="300"/>
+	<meta property="og:image:type" content="image/jpeg"/>
+	<meta name="twitter:card" content="summary_large_image"/>
+	<meta name="twitter:site" content="@ZentasticArtsRo"/>
+	 <link rel='shortlink' href='https://dascent-sigils.com/' />
+    <link rel="icon" href="https://raw.githubusercontent.com/Dascent/magic-sigils/main/favicon.ico" sizes="200x200" />
+    <link rel="icon" href="https://raw.githubusercontent.com/Dascent/magic-sigils/main/favicon.png" sizes="200x200" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+		.iflex{display:flex;gap:10px;}
+#sigilCanvas {border: 1px solid black;margin:10px auto 12px auto;}
+
+
+	    /*** Github ***/
+	    .gitit{width:auto;height:auto;position:fixed;top:0;right:0;text-align:center;padding:.7em .7em .7em;background-color:#222;}
+	   .gitit a{opacity:.6;}
+	   .gitit a:hover{opacity:1;}
+
+	    .working{display:block;width:100%;height:auto;position:fixed;bottom:0;left:0;text-align:center;margin:0 auto;padding:.7em 0 .7em;background-color:#f1f1f1;}
+	     .working p{display:block;width:90%;height:auto;margin:0 auto;font-size:15px;color:#888;}
+    </style>
+</head>
+<body>
+    <h3>Create Your Magical Sigil</h3>
+    <div class="iflex">
+    <input type="text" id="userInput" placeholder="Enter your text here">
+    <button id="createSigilButton">Create Sigil</button>
+    </div>
+    <canvas id="sigilCanvas" width="300" height="300"></canvas>
+    <button id="downloadSigilButton">Download Sigil</button>
+
+<!--- Github --->
+	<div class="gitit">
+<a href="https://github.com/Dascent/magic-sigils/blob/main/sigils/basic-sigil-generator.html" target="_blank">
+<img src="https://avatars.githubusercontent.com/u/13005368?v=4" style="width:30px;height:auto;margin:0 auto;"/>
+	</a>
+	</div>
+
+<div class="working">
+<p>Here's a more advanced version based on this web app - <a href="https://dascent-sigils.com/webapps/online-sigil-generator/">Dascentian Sigil Generator</a></p>
+</div>
+<!---/ end Github --->	
+    <script>
+        const letterMapping = {
+            'B': 1, 'M': 1, 'X': 1,
+            'C': 2, 'N': 2, 'Z': 2,
+            'D': 3, 'P': 3,
+            'F': 4, 'Q': 4,
+            'G': 5, 'R': 5,
+            'H': 6, 'S': 6,
+            'J': 7, 'T': 7,
+            'K': 8, 'V': 8,
+            'L': 9, 'W': 9
+        };
+
+        document.getElementById('createSigilButton').addEventListener('click', createSigil);
+        document.getElementById('downloadSigilButton').addEventListener('click', downloadSigil);
+
+        function createSigil() {
+            const userInput = document.getElementById('userInput').value.toUpperCase();
+            const uniqueLetters = Array.from(new Set(userInput.replace(/[AEIOU]/g, '').split('')));
+            const positions = uniqueLetters.map(letter => letterMapping[letter]).filter(pos => pos !== undefined);
+
+            if (positions.length === 0) {
+                alert('No valid letters found to create a sigil.');
+                return;
+            }
+
+            const canvas = document.getElementById('sigilCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawSigil(ctx, positions);
+        }
+
+        function drawSigil(ctx, positions) {
+            const grid = {
+                1: { x: 50, y: 50 },  2: { x: 150, y: 50 },  3: { x: 250, y: 50 },
+                4: { x: 50, y: 150 }, 5: { x: 150, y: 150 }, 6: { x: 250, y: 150 },
+                7: { x: 50, y: 250 }, 8: { x: 150, y: 250 }, 9: { x: 250, y: 250 }
+            };
+
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = 'black';
+            ctx.fillStyle = 'black';
+
+            let currentIndex = 0;
+            const drawNextLine = () => {
+                if (currentIndex < positions.length - 1) {
+                    ctx.beginPath();
+                    const startPos = grid[positions[currentIndex]];
+                    const endPos = grid[positions[currentIndex + 1]];
+                    ctx.moveTo(startPos.x, startPos.y);
+                    ctx.lineTo(endPos.x, endPos.y);
+                    ctx.stroke();
+
+                    // Draw circle at the end of the line
+                    ctx.beginPath();
+                    ctx.arc(endPos.x, endPos.y, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+
+                    currentIndex++;
+                    setTimeout(drawNextLine, 500);
+                } else {
+                    drawEncapsulatingCircle();
+                }
+            };
+
+            // Draw initial circle
+            const startPos = grid[positions[0]];
+            ctx.beginPath();
+            ctx.arc(startPos.x, startPos.y, 3, 0, 2 * Math.PI);
+            ctx.fill();
+
+            drawNextLine();
+        }
+
+        function drawEncapsulatingCircle() {
+            const canvas = document.getElementById('sigilCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.beginPath();
+            ctx.arc(150, 150, 125, 0, 2 * Math.PI);
+            ctx.stroke();
+        }
+
+        function downloadSigil() {
+            const canvas = document.getElementById('sigilCanvas');
+            const link = document.createElement('a');
+            link.download = 'sigil.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+</body>
+</html>
