@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG to PNG Converter</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+body{margin:0 auto; background-color: #f3f4f6;}
+      .iscorp {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 1rem;
+            margin: 0 auto;
+        }
+
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            max-width: 42rem;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 1.875rem; /* 3xl */
+            font-weight: 800; /* extrabold */
+            color: #1f2937; /* gray-800 */
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            color: #4b5563; /* gray-600 */
+            margin-bottom: 0.5rem;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db; /* gray-300 */
+            border-radius: 0.75rem; /* rounded-xl */
+            font-family: monospace;
+            font-size: 0.875rem; /* text-sm */
+            resize: none;
+            outline: none;
+            box-sizing: border-box;
+        }
+        
+        .input-group input:focus,
+        .input-group textarea:focus {
+            border-color: #3b82f6; /* blue-500 */
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+        }
+
+        .preview-container {
+            border: 1px solid #d1d5db;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+        
+        .preview-container svg {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .button {
+            width: 100%;
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+            font-weight: 600; /* semibold */
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            margin-top: 1rem;
+            display: block;
+        }
+        
+        .button:hover {
+            background-color: #1d4ed8; /* blue-700 */
+        }
+        
+        .url-button {
+            margin-top: 0;
+            background-color: #10b981; /* green-500 */
+        }
+        
+        .url-button:hover {
+            background-color: #059669; /* green-600 */
+        }
+
+        .message-box {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            text-align: center;
+            border-radius: 0.75rem;
+            color: white;
+        }
+        
+        .message-success {
+            background-color: #10b981; /* green-500 */
+        }
+        
+        .message-error {
+            background-color: #ef4444; /* red-500 */
+        }
+        
+        .hidden {
+            display: none;
+        }
+		.mbtm{margin-bottom:10px;}
+		.credits{display:block;text-align:center;font-size:14px;margin:20px auto 10px auto;color:#555;}
+    </style>
+</head>
+<body>
+
+<div class="iscorp">
+    <!-- Main container for the app -->
+    <div class="container">
+        <h1>SVG to PNG Converter</h1>
+
+        <!-- Input for SVG URL -->
+        <div class="input-group">
+            <label for="svg-url" class="mbtm">Enter SVG URL:</label>
+            <input type="url" id="svg-url" class="mbtm" placeholder="https://example.com/image.svg" />
+            <button id="load-url-button" class="button url-button">Load from URL</button>
+        </div>
+
+        <!-- Text area for pasting SVG code -->
+        <div class="input-group">
+            <label for="svg-input">Paste SVG Code:</label>
+            <textarea
+                id="svg-input"
+                rows="10"
+                placeholder="Paste your SVG code here..."
+            ></textarea>
+        </div>
+        
+        <!-- Live preview of the SVG -->
+        <div class="input-group">
+            <label>Live Preview:</label>
+            <div id="svg-preview" class="preview-container">
+                <p style="color: #9ca3af;">Preview will appear here</p>
+            </div>
+        </div>
+
+        <!-- Button to trigger the download -->
+        <button id="download-button" class="button">Convert & Download as PNG</button>
+        
+        <!-- Message box for feedback -->
+        <div id="message-box" class="message-box hidden"></div>
+
+        <!-- Hidden canvas for rendering the SVG before conversion -->
+        <canvas id="conversion-canvas" class="hidden"></canvas>
+        
+        
+        
+    </div>
+ </div>   
+    <div class="credits">Pocket WebApp by <a href="https://wiki.dascent-sigils.com/index.php/Ai/Gemini">Gemini Ai</a> for <a href="https://www.reddit.com/r/DoneByAi/">r/DoneByAi</a></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get references to all the necessary DOM elements
+            const svgUrlInput = document.getElementById('svg-url');
+            const loadUrlButton = document.getElementById('load-url-button');
+            const svgInput = document.getElementById('svg-input');
+            const svgPreview = document.getElementById('svg-preview');
+            const downloadButton = document.getElementById('download-button');
+            const messageBox = document.getElementById('message-box');
+            const canvas = document.getElementById('conversion-canvas');
+            const context = canvas.getContext('2d');
+
+            // Show a temporary message to the user
+            const showMessage = (text, type = 'success') => {
+                messageBox.textContent = text;
+                messageBox.classList.remove('hidden', 'message-success', 'message-error');
+                if (type === 'success') {
+                    messageBox.classList.add('message-success');
+                } else if (type === 'error') {
+                    messageBox.classList.add('message-error');
+                }
+                setTimeout(() => {
+                    messageBox.classList.add('hidden');
+                }, 3000); // Hide the message after 3 seconds
+            };
+
+            // Function to update the SVG preview
+            const updatePreview = (svgString) => {
+                if (svgString.trim() !== '') {
+                    svgPreview.innerHTML = svgString;
+                } else {
+                    svgPreview.innerHTML = '<p style="color: #9ca3af;">Preview will appear here</p>';
+                }
+            };
+            
+            // Event listener for the textarea input to update the live preview
+            svgInput.addEventListener('input', (event) => {
+                updatePreview(event.target.value);
+                // Clear the URL input when typing in the textarea
+                svgUrlInput.value = '';
+            });
+
+            // Event listener for the load URL button
+            loadUrlButton.addEventListener('click', async () => {
+                const url = svgUrlInput.value.trim();
+                if (!url) {
+                    showMessage('Please enter a valid URL.', 'error');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const svgString = await response.text();
+                    svgInput.value = svgString;
+                    updatePreview(svgString);
+                    showMessage('SVG loaded successfully from URL!', 'success');
+                } catch (error) {
+                    showMessage(`Error loading SVG from URL: ${error.message}`, 'error');
+                    console.error('Fetch error:', error);
+                    // Clear the textarea and preview on error
+                    svgInput.value = '';
+                    updatePreview('');
+                }
+            });
+
+            // Event listener for the download button
+            downloadButton.addEventListener('click', () => {
+                const svgString = svgInput.value.trim();
+
+                // Check if the input area is empty
+                if (!svgString) {
+                    showMessage('Please paste or load some SVG code first!', 'error');
+                    return;
+                }
+
+                // Create an Image object to hold the SVG data
+                const img = new Image();
+
+                // Handle loading the image successfully
+                img.onload = () => {
+                    // Set the canvas dimensions to match the SVG dimensions
+                    const parser = new DOMParser();
+                    const svgDoc = parser.parseFromString(svgString, 'image/svg+xml');
+                    const svgElement = svgDoc.documentElement;
+                    const svgWidth = parseInt(svgElement.getAttribute('width')) || img.naturalWidth || 500;
+                    const svgHeight = parseInt(svgElement.getAttribute('height')) || img.naturalHeight || 500;
+
+                    canvas.width = svgWidth;
+                    canvas.height = svgHeight;
+
+                    // Draw the SVG image onto the canvas
+                    context.clearRect(0, 0, canvas.width, canvas.height); // Clear previous content
+                    context.drawImage(img, 0, 0);
+
+                    // Get the PNG data from the canvas
+                    const pngDataUrl = canvas.toDataURL('image/png');
+
+                    // Create a temporary link element to trigger the download
+                    const link = document.createElement('a');
+                    link.href = pngDataUrl;
+                    link.download = 'svg-image.png'; // Set the default filename
+                    document.body.appendChild(link); // Append to body to make it clickable
+                    link.click(); // Programmatically click the link
+                    document.body.removeChild(link); // Clean up the temporary link
+
+                    showMessage('Image successfully converted and downloaded!');
+
+                    // Clean up the object URL to free up memory
+                    URL.revokeObjectURL(img.src);
+                };
+
+                // Handle errors if the SVG is invalid
+                img.onerror = (error) => {
+                    showMessage('Error: Invalid SVG code. Please check your input.', 'error');
+                    console.error('Error loading SVG:', error);
+                    // Clean up the object URL in case of an error as well
+                    URL.revokeObjectURL(img.src);
+                };
+
+                // Create a Blob from the SVG string and set the image source
+                // This is the cleanest way to handle the SVG conversion
+                const svgBlob = new Blob([svgString], { type: 'image/svg+xml' });
+                img.src = URL.createObjectURL(svgBlob);
+            });
+        });
+    </script>
+
+</body>
+</html>
+
