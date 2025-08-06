@@ -2,6 +2,13 @@
 
 This is a simple, one-page web application that allows you to convert Scalable Vector Graphics (SVG) code into a downloadable PNG image. You can either paste your SVG code directly into a text area or provide a URL to an SVG file. The app features a live preview and is built entirely in a single HTML file with no external dependencies.
 
+
+### Issues
+* **CORS - feathing svg image via URL doesn't work due to CORS policy.
+
+### Demo
+[SVG to PNG Converter](https://dascent.github.io/4ai/source/projects/svg-to-png/)
+
 ---
 
 ### Features
@@ -31,4 +38,5 @@ This single-file application is very easy to modify. Here are a few ways you can
 * **Change the Styles:** All of the CSS is located in the `<style>` tag in the `<head>`. You can easily change colors, fonts, spacing, and layout directly in this section.
 * **Change the Default Size:** The default canvas dimensions are set to `500x500` pixels in the JavaScript. You can modify these values in the `downloadButton.addEventListener` function by changing `500`.
 * **Change the Filename:** The default filename for the downloaded image is `svg-image.png`. You can change this on line 219 by editing the `link.download` property.
+
 * **Use a Different Image Format:** You can easily change the output format by modifying the `toDataURL()` method. For example, to save as a JPEG, you can change `canvas.toDataURL('image/png')` to `canvas.toDataURL('image/jpeg')`.
