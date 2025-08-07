@@ -128,6 +128,13 @@ body{margin:0 auto; background-color: #f3f4f6;}
         .hidden {
             display: none;
         }
+	    
+        #conversion-counter {
+            text-align: center;
+            font-weight: 600;
+            color: #4b5563; /* gray-600 */
+            margin-top: 1rem;
+        }
 		.mbtm{margin-bottom:10px;}
 		.credits{display:block;text-align:center;font-size:14px;margin:20px auto 10px auto;color:#555;}
     </style>
@@ -166,7 +173,9 @@ body{margin:0 auto; background-color: #f3f4f6;}
 
         <!-- Button to trigger the download -->
         <button id="download-button" class="button">Convert & Download as PNG</button>
-        
+         <!-- Counter display -->
+        <p id="conversion-counter">Conversions: 0</p>
+	 <!-- update to add counter -->
         <!-- Message box for feedback -->
         <div id="message-box" class="message-box hidden"></div>
 
@@ -180,7 +189,7 @@ body{margin:0 auto; background-color: #f3f4f6;}
     <div class="credits">Pocket WebApp by <a href="https://wiki.dascent-sigils.com/index.php/Ai/Gemini">Gemini Ai</a> for <a href="https://www.reddit.com/r/DoneByAi/">r/DoneByAi</a></div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+ document.addEventListener('DOMContentLoaded', () => {
             // Get references to all the necessary DOM elements
             const svgUrlInput = document.getElementById('svg-url');
             const loadUrlButton = document.getElementById('load-url-button');
@@ -189,7 +198,11 @@ body{margin:0 auto; background-color: #f3f4f6;}
             const downloadButton = document.getElementById('download-button');
             const messageBox = document.getElementById('message-box');
             const canvas = document.getElementById('conversion-canvas');
+            const counterDisplay = document.getElementById('conversion-counter');
             const context = canvas.getContext('2d');
+
+            // Initialize a counter variable
+            let conversionCount = 0;
 
             // Show a temporary message to the user
             const showMessage = (text, type = 'success') => {
@@ -282,12 +295,16 @@ body{margin:0 auto; background-color: #f3f4f6;}
                     // Create a temporary link element to trigger the download
                     const link = document.createElement('a');
                     link.href = pngDataUrl;
-                    link.download = 'svg-image.png'; // Set the default filename
+                    link.download = 'ds-image.png'; // Set the default filename
                     document.body.appendChild(link); // Append to body to make it clickable
                     link.click(); // Programmatically click the link
                     document.body.removeChild(link); // Clean up the temporary link
 
                     showMessage('Image successfully converted and downloaded!');
+                    
+                    // Increment the counter and update the display
+                    conversionCount++;
+                    counterDisplay.textContent = `Conversions: ${conversionCount}`;
 
                     // Clean up the object URL to free up memory
                     URL.revokeObjectURL(img.src);
@@ -311,4 +328,5 @@ body{margin:0 auto; background-color: #f3f4f6;}
 
 </body>
 </html>
+
 
