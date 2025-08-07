@@ -6,7 +6,8 @@
     <title>SVG to PNG Converter</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-body{margin:0 auto; background-color: #f3f4f6;}
+
+     body{margin:0 auto; background-color: #f3f4f6;}
       .iscorp {
             font-family: 'Inter', sans-serif;
             display: flex;
@@ -128,19 +129,27 @@ body{margin:0 auto; background-color: #f3f4f6;}
         .hidden {
             display: none;
         }
-	    
+        
+        .info-box {
+            background-color: #e0f2fe; /* blue-100 */
+            color: #0c4a6e; /* sky-900 */
+            border-left: 4px solid #3b82f6; /* blue-500 */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+        }
+        
         #conversion-counter {
             text-align: center;
             font-weight: 600;
             color: #4b5563; /* gray-600 */
             margin-top: 1rem;
         }
-		.mbtm{margin-bottom:10px;}
-		.credits{display:block;text-align:center;font-size:14px;margin:20px auto 10px auto;color:#555;}
+	.mbtm{margin-bottom:10px;}
+	.credits{display:block;text-align:center;font-size:14px;margin:20px auto 10px auto;color:#555;}
     </style>
 </head>
 <body>
-
 <div class="iscorp">
     <!-- Main container for the app -->
     <div class="container">
@@ -148,10 +157,16 @@ body{margin:0 auto; background-color: #f3f4f6;}
 
         <!-- Input for SVG URL -->
         <div class="input-group">
-            <label for="svg-url" class="mbtm">Enter SVG URL:</label>
-            <input type="url" id="svg-url" class="mbtm" placeholder="https://example.com/image.svg" />
+            <label for="svg-url">Enter SVG URL:</label>
+            <input type="url" id="svg-url" placeholder="https://example.com/image.svg" />
             <button id="load-url-button" class="button url-button">Load from URL</button>
         </div>
+        
+        <!-- CORS Information 
+        <div class="info-box">
+            <p><strong>Note on "Failed to fetch":</strong> When loading an SVG from a URL, the browser's security policy (CORS) can block requests. If you are using a GitHub URL, you might need to use a CDN like jsDelivr to serve the file with the correct headers.</p>
+            <p class="mt-2 text-sm">Example: `https://cdn.jsdelivr.net/gh/user/repo@main/path/to/file.svg`</p>
+        </div>  -->
 
         <!-- Text area for pasting SVG code -->
         <div class="input-group">
@@ -173,23 +188,20 @@ body{margin:0 auto; background-color: #f3f4f6;}
 
         <!-- Button to trigger the download -->
         <button id="download-button" class="button">Convert & Download as PNG</button>
-         <!-- Counter display -->
+        
+        <!-- Counter display -->
         <p id="conversion-counter">Conversions: 0</p>
-	 <!-- update to add counter -->
+        
         <!-- Message box for feedback -->
         <div id="message-box" class="message-box hidden"></div>
 
         <!-- Hidden canvas for rendering the SVG before conversion -->
         <canvas id="conversion-canvas" class="hidden"></canvas>
-        
-        
-        
     </div>
  </div>   
-    <div class="credits">Pocket WebApp by <a href="https://wiki.dascent-sigils.com/index.php/Ai/Gemini">Gemini Ai</a> for <a href="https://www.reddit.com/r/DoneByAi/">r/DoneByAi</a></div>
-
+<div class="credits">Pocket WebApp by <a href="https://wiki.dascent-sigils.com/index.php/Ai/Gemini">Gemini Ai</a> for <a href="https://www.reddit.com/r/DoneByAi/">r/DoneByAi</a> | v.2</div>
     <script>
- document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', () => {
             // Get references to all the necessary DOM elements
             const svgUrlInput = document.getElementById('svg-url');
             const loadUrlButton = document.getElementById('load-url-button');
@@ -295,7 +307,7 @@ body{margin:0 auto; background-color: #f3f4f6;}
                     // Create a temporary link element to trigger the download
                     const link = document.createElement('a');
                     link.href = pngDataUrl;
-                    link.download = 'ds-image.png'; // Set the default filename
+                    link.download = 'svg-image.png'; // Set the default filename
                     document.body.appendChild(link); // Append to body to make it clickable
                     link.click(); // Programmatically click the link
                     document.body.removeChild(link); // Clean up the temporary link
@@ -328,5 +340,3 @@ body{margin:0 auto; background-color: #f3f4f6;}
 
 </body>
 </html>
-
-
