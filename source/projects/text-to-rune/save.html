@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Convert</title>
+<style>
+body{margin:0 auto;background-color:#f1f1f1;}
+#output {margin-top: 20px;font-size: 1.5em;white-space: pre-wrap;color:#333;background-color:transparent;}
+.norse{display: flex;flex-direction: row;align-items: center;justify-content: center;height: auto;margin: 0 auto;padding:0;height:auto;}
+.norse input[type="text"].typetext{display:block;height:auto;margin:0;padding:.5em .7em .5em;border:0;border-radius:5px 0 0 5px;box-shadow:inset 0 1px 3px #999,0 2px 3px rgba(255,255,255,0.6),0 0 1px #000; outline-style:none;font-size:14px;font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;}
+.norse button.convertbtn{display:block;height:auto;margin:0;padding:.5em .7em .5em;border:0;border-radius:0 5px 5px 0;box-shadow:inset 0 1px 3px #fff,0 2px 3px rgba(255,255,255,0.6),0 0 1px #000; outline-style:none;font-size:14px;font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;cursor:pointer;background-color:#f1f1f1;font-weight:bold;color:#036;} .norse button.convertbtn:hover{background-color:#036;color:#fff;box-shadow:inset 0 1px 3px #06C,0 2px 3px rgba(255,255,255,0.0),0 0 1px #000;}.norse button.convertbtn:active{background-color:#222;color:#fff;box-shadow:inset 0 1px 3px #000,0 2px 3px rgba(255,255,255,0.0),0 0 1px #000;}
+/*save button */
+.norse .save-btn {border-radius: 5px;margin-left: 10px;background-color: #036;color: #fff;font-weight: bold;padding: .5em .7em .5em;cursor: pointer;border: none;}
+.norse .save-btn:hover {background-color: #06C;}
+.isup{padding-top:3em;}
+.version{display:block;width:100%;height:auto;margin:0 auto;position:fixed;bottom:0;left:0;}
+.inversion{display:block;width:97%;height:auto;margin:0 auto;padding:.6em 0 .6em;text-align:center;font-size:15px;}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+
+<div class="norse isup">
+<p>Type a short phrase and click Convert button</p>
+</div>
+<div class="norse">
+<input type="text" class="typetext" id="inputText" placeholder="Type here..." spellcheck="false">
+<button id="convertButton" class="convertbtn">Convert</button>
+</div>
+<div class="norse">
+<div id="output"></div>
+</div>
+<div class="norse isup">
+<button id="saveButton" class="save-btn" style="display:none;">Save as PNG</button>
+</div>
+<div class="norse">
+<p id="seoutput" style="display:none;">This pocket web app saves a PNG image file for ring inscriptions</p>
+</div>
+
+
+
+
+<div class="version">
+<div class="inversion"><a href="index.html">&laquo; Go to version 1</a> | <a href="">Open Source</a> | <a href="">Info about Pocket WebApp</a></div>
+</div>
+
+<script>
+const runeMapping = {
+            'A': '\u16A8', // ᚨ (Ansuz)
+            'B': '\u16D2', // ᛒ (Berkanan)
+            'C': '\u16B2', // ᚲ (Kaunan)
+            'D': '\u16DE', // ᛞ (Dagaz)
+            'E': '\u16D6', // ᛖ (Ehwaz)
+            'F': '\u16A0', // ᚠ (Fehu)
+            'G': '\u16B7', // ᚷ (Gebo)
+            'H': '\u16BA', // ᚺ (Haglaz)
+            'I': '\u16C1', // ᛁ (Isa)
+            'J': '\u16C3', // ᛃ (Jera)
+            'K': '\u16B2', // ᚲ (Kaunan)
+            'L': '\u16DA', // ᛚ (Laguz)
+            'M': '\u16D7', // ᛗ (Mannaz)
+            'N': '\u16BE', // ᚾ (Nauthiz)
+            'O': '\u16DF', // ᛟ (Othala)
+            'P': '\u16C8', // ᛈ (Perthro)
+            'Q': '\u16B2', // ᚲ (Kaunan) (Note: Using Kaunan for 'Q')
+            'R': '\u16B1', // ᚱ (Raido)
+            'S': '\u16CA', // ᛊ (Sowilo)
+            'T': '\u16CF', // ᛏ (Tiwaz)
+            'U': '\u16A2', // ᚢ (Uruz)
+            'V': '\u16B9', // ᚹ (Wunjo)
+            'W': '\u16B9', // ᚹ (Wunjo)
+            'X': '\u16C9', // ᛉ (Algiz) (Note: Using Algiz for 'X')
+            'Y': '\u16C7', // ᛇ (Eihwaz)
+            'Z': '\u16C9',  // ᛉ (Algiz) (Note: Using Algiz for 'Z')
+			// Mapping for lowercase
+			'a': 'ᚬ', 'b': 'ᛒ', 'c': 'ᛣ', 'd': 'ᛏ', 'e': 'ᚬ', 'f': 'ᚠ', 'g': 'ᚴ',
+    'h': 'ᚼ', 'i': 'ᛁ', 'j': 'ᛁ', 'k': 'ᛣ', 'l': 'ᛚ', 'm': 'ᛘ', 'n': 'ᚾ',
+    'o': 'ᚬ', 'p': 'ᛔ', 'q': 'ᛣ', 'r': 'ᚱ', 's': 'ᛋ', 't': 'ᛏ', 'u': 'ᚢ',
+    'v': 'ᚠ', 'w': 'ᚠ', 'x': 'ᛋ', 'y': 'ᛁ', 'z': 'ᛋ',
+	//maping for numbers and punctuation
+	// Mapping for numbers and punctuation
+    '1': 'ᛏ', '2': 'ᚢ', '3': 'ᚦ', '4': 'ᚠ', '5': 'ᚱ', '6': 'ᚴ', '7': 'ᚼ',
+    '8': 'ᚾ', '9': 'ᛁ', '0': 'ᛋ',
+    ' ': ' ', // Space
+    '.': ':', ',': ':', '!': '.', '?': '.', "'": '.', '"': '.'
+};
+
+const inputText = document.getElementById('inputText');
+const convertButton = document.getElementById('convertButton');
+const output = document.getElementById('output');
+const saveButton = document.getElementById('saveButton');
+const seoutput = document.getElementById('seoutput');
+const tempDiv = document.createElement('div');
+convertButton.addEventListener('click', () => {
+    const inputValue = inputText.value.toUpperCase();
+    const runes = inputValue.split('').map(char => runeMapping[char] || char).join('');
+    output.textContent = runes;
+    
+    // Show the save button only if there's output
+    if (runes) {
+        saveButton.style.display = 'block';
+		seoutput.style.display = 'block';
+    } else {
+        saveButton.style.display = 'none';
+		seoutput.style.display = 'none';
+    }
+});
+
+saveButton.addEventListener('click', () => {
+    // 1. Create a new div element in memory.
+    const tempDiv = document.createElement('div');
+    
+    // 2. Set its content and styles using JavaScript.
+    //    We are applying styles directly to the `tempDiv` variable.
+    tempDiv.textContent = output.textContent;
+    tempDiv.style.color = '#333';
+    tempDiv.style.fontFamily = 'serif';
+    tempDiv.style.fontSize = '60px'; 
+    tempDiv.style.padding = '20px';
+    tempDiv.style.backgroundColor = 'transparent'; // Sets the div's own background to transparent
+    tempDiv.style.whiteSpace = 'pre';
+    tempDiv.style.position = 'absolute';
+    tempDiv.style.left = '-9999px'; // Hides the div off-screen
+
+    // 3. Add the temporary div to the document body.
+    document.body.appendChild(tempDiv);
+
+    // 4. Use html2canvas with the 'backgroundColor' option.
+    //    This tells the library to render the canvas with a transparent background.
+    html2canvas(tempDiv, {
+        backgroundColor: null
+    }).then(canvas => {
+        // 5. Create a download link and trigger a click.
+        const image = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = image;
+        link.download = 'runes.png';
+        link.click();
+        
+        // 6. Remove the temporary div from the document.
+        document.body.removeChild(tempDiv);
+    });
+});
+</script>
+
+</body>
+</html>
