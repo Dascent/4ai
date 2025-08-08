@@ -4,11 +4,11 @@ This is a simple, one-page web application that allows you to convert Scalable V
 
 
 ### Issues
-* **CORS - feathing svg image via URL doesn't work due to CORS policy.
+* CORS - feathing svg image via URL doesn't work due to CORS policy.
 
 ### Demo
-[SVG to PNG Converter](https://dascent.github.io/4ai/source/projects/svg-to-png/)
-[Wiki / Dicussion](https://wiki.dascent-sigils.com/index.php/Pocket_WebApps/SVG_to_PNG)
+* [SVG to PNG Converter](https://dascent.github.io/4ai/source/projects/svg-to-png/)
+* [Wiki / Dicussion](https://wiki.dascent-sigils.com/index.php/Pocket_WebApps/SVG_to_PNG)
 
 ---
 
@@ -41,4 +41,5 @@ This single-file application is very easy to modify. Here are a few ways you can
 * **Change the Filename:** The default filename for the downloaded image is `svg-image.png`. You can change this on line 219 by editing the `link.download` property.
 
 * **Use a Different Image Format:** You can easily change the output format by modifying the `toDataURL()` method. For example, to save as a JPEG, you can change `canvas.toDataURL('image/png')` to `canvas.toDataURL('image/jpeg')`.
+
 
