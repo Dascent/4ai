@@ -6,6 +6,7 @@ It runs entirely in the browser — no server, no database, no external uploads.
 
 <h3>Links</h3>
 * [Documentation](https://wiki.dascent-sigils.com/index.php/Pocket_WebApps/Quote_Image_Maker)
+
 * [Online Demo](https://dascent.github.io/4ai/source/projects/quote-it/)
 
 
@@ -133,7 +134,7 @@ Entirely client-side (safe, private, offline-friendly)
 
 📸 Screenshots
 
-| WebApp | Quote |
+| Quote | WebApp|
 |----------|----------|
 | [![Banner 1](https://raw.githubusercontent.com/Dascent/4ai/refs/heads/main/source/projects/quote-it/img/sample.png)](https://wiki.dascent-sigils.com/index.php/Pocket_WebApps/Quote_Image_Maker) <br/> *Classic Quote Card with gradient background and golden star* | [![Banner 2](https://raw.githubusercontent.com/Dascent/4ai/refs/heads/main/source/projects/quote-it/img/screenshot-webapp.png)](https://dascent.github.io/4ai/source/projects/quote-it/) <br/> *WebApp Screenshot* |
 
@@ -142,6 +143,7 @@ Entirely client-side (safe, private, offline-friendly)
 📄 License
 
 MIT License — feel free to use, modify, and share. Contributions welcome!
+
 
 
 
