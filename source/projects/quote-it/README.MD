@@ -4,13 +4,10 @@
 
 It runs entirely in the browser — no server, no database, no external uploads. Everything stays on your device.
 
-
 <h3>Links</h3>
-- [Documentation](https://wiki.dascent-sigils.com/index.php/Pocket_WebApps/Quote_Image_Maker)
-- [Online Demo](https://wiki.dascent-sigils.com/index.php/Pocket_WebApps/Quote_Image_Maker)
+* [Documentation](https://wiki.dascent-sigils.com/index.php/Pocket_WebApps/Quote_Image_Maker)
+* [Online Demo](https://dascent.github.io/4ai/source/projects/quote-it/)
 
-
----
 
 ## ✨ Features
 
@@ -106,7 +103,7 @@ const ICONS = [
   { id:'glasses', name:'Glasses', src: svgURI(`<svg ...>...</svg>`) }
 ];
 
-
+```
 
 **Add a new entry with:**
 
@@ -138,13 +135,14 @@ Entirely client-side (safe, private, offline-friendly)
 
 | WebApp | Quote |
 |----------|----------|
-| [![Banner 1](https://via.placeholder.com/400x200.png?text=Banner+1)](https://example.com/banner1) <br/> *Classic Quote Card with gradient background and golden star* | [![Banner 2](https://via.placeholder.com/400x200.png?text=Banner+2)](https://example.com/banner2) <br/> *Playful Cover with custom photo, glasses and heart icons* |
+| [![Banner 1](https://raw.githubusercontent.com/Dascent/4ai/refs/heads/main/source/projects/quote-it/img/sample.png)](https://wiki.dascent-sigils.com/index.php/Pocket_WebApps/Quote_Image_Maker) <br/> *Classic Quote Card with gradient background and golden star* | [![Banner 2](https://raw.githubusercontent.com/Dascent/4ai/refs/heads/main/source/projects/quote-it/img/screenshot-webapp.png)](https://dascent.github.io/4ai/source/projects/quote-it/) <br/> *WebApp Screenshot* |
 
 
 
 📄 License
 
 MIT License — feel free to use, modify, and share. Contributions welcome!
+
 
 
 
