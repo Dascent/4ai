@@ -5,6 +5,7 @@
 It runs entirely in the browser — no server, no database, no external uploads. Everything stays on your device.
 
 <h3>Links</h3>
+
 * [Documentation](https://wiki.dascent-sigils.com/index.php/Pocket_WebApps/Quote_Image_Maker)
 
 * [Online Demo](https://dascent.github.io/4ai/source/projects/quote-it/)
@@ -143,6 +144,7 @@ Entirely client-side (safe, private, offline-friendly)
 📄 License
 
 MIT License — feel free to use, modify, and share. Contributions welcome!
+
 
 
 
