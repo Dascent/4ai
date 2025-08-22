@@ -16,7 +16,7 @@ This repo was created to hold online projects and demos for public access.
 
 <b>Projects</b><br>
 <em>Project category has various online projects which are not fully developed or in need of further development</em>
-<ul>
+<ol>
   <li>Image metadata reader<br>
     Read the metadata from images
   <ul>
@@ -32,23 +32,23 @@ This repo was created to hold online projects and demos for public access.
     <li><a href="https://github.com/Dascent/4ai/tree/main/source/projects/is-ai" target="_blank">Opens source code</a></li>
   </ul>
   </li>
-      <li>Quote Image Maker<br>
-        <em>A nice image quote generator. Add text, image, or icons to create a nice quote and save it for Facebook post or cover</em>
-        <ul>
-           <li><a href="https://dascent.github.io/4ai/source/projects/quote-it/" target="_blank">Online Demo</a></li>
-          <li><a href="https://github.com/Dascent/4ai/tree/main/source/projects/quote-it" target="_blank">Opens source code</a></li>
-        </ul>
-      </li>
-      <li>
-        <ul>SVG to PNG<br>
-          <em>Converts SVG code into PNG image</em>
-          <li><a href="https://dascent.github.io/4ai/source/projects/svg-to-png/" target="_blank">Online demo</a></li>
-          <li><a href="https://wiki.dascent-sigils.com/index.php/Pocket_WebApps/SVG_to_PNG" target="_blank">Documentation</a></li>
-          <li><a href="https://github.com/Dascent/4ai/tree/main/source/projects/svg-to-png" target="_blank">Open source code</a></li>
-        </ul>
-      </li>
-      <li>Text to Rune symbols<br>
-        <em>Changes the classic letter characters into rune symbols</em>
+  <li>Quote Image Maker<br>
+    <em>A nice image quote generator. Add text, image, or icons to create a nice quote and save it for Facebook post or cover</em>
+   <ul>
+     <li><a href="https://dascent.github.io/4ai/source/projects/quote-it/" target="_blank">Online Demo</a></li>
+     <li><a href="https://github.com/Dascent/4ai/tree/main/source/projects/quote-it" target="_blank">Opens source code</a></li>
+  </ul>
+ </li>
+  <li>SVG to PNG<br>
+     <em>Converts SVG code into PNG image</em>
+    <ul>
+    <li><a href="https://dascent.github.io/4ai/source/projects/svg-to-png/" target="_blank">Online demo</a></li>
+    <li><a href="https://wiki.dascent-sigils.com/index.php/Pocket_WebApps/SVG_to_PNG" target="_blank">Documentation</a></li>
+    <li><a href="https://github.com/Dascent/4ai/tree/main/source/projects/svg-to-png" target="_blank">Open source code</a></li>
+    </ul>
+  </li>
+  <li>Text to Rune symbols<br>
+    <em>Changes the classic letter characters into rune symbols</em>
         <ul>
           <li><a href="https://dascent.github.io/4ai/source/projects/text-to-rune/" target="_blank">Online demo version 1</a></li>
           <li><a href="https://dascent.github.io/4ai/source/projects/text-to-rune/save.html" target="_blank">Online demo version 2 (option to save as PNG)</a></li>
@@ -57,6 +57,7 @@ This repo was created to hold online projects and demos for public access.
         </ul>
       </li>
 </ul>
+
 
 ---
 
