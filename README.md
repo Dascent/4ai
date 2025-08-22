@@ -22,7 +22,7 @@ This repo was created to hold online projects and demos for public access.
   <ul>
     <li><a href="https://dascent.github.io/4ai/source/projects/image-metadata-reader/" target="_blank">Online demo Version 1</a></li>
     <li><a href="https://dascent.github.io/4ai/source/projects/image-metadata-reader/v2.html" target="_blank">Online demo Version 2</a></li>
-    <li><a href="https://github.com/Dascent/4ai/tree/main/source/projects/image-metadata-reader" target="_blank">Open source code</li>
+    <li><a href="https://github.com/Dascent/4ai/tree/main/source/projects/image-metadata-reader" target="_blank">Open source code</a></li>
   </ul>
   </li>
   <li>'Is Ai?' Image detector<br>
