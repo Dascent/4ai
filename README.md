@@ -56,7 +56,7 @@ This repo was created to hold online projects and demos for public access.
           <li><a href="https://github.com/Dascent/4ai/tree/main/source/projects/text-to-rune" target="_blank">Open source code</a></li>
         </ul>
       </li>
-</ul>
+</ol>
 
 
 ---
