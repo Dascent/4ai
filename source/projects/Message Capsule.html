@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Message Capsule Encoder & Decoder</title>
+<style>
+body{font-family:system-ui,sans-serif;background:#0f172a;color:#f8fafc;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;height:100vh;margin:0;padding:20px}
+h1{color:#38bdf8;margin-bottom:10px;text-align:center}
+.tabs{display:flex;justify-content:center;margin-bottom:20px}
+.tab{padding:10px 20px;cursor:pointer;border-radius:8px 8px 0 0;background:#1e293b;color:#94a3b8;margin:0 3px;font-weight:500;transition:.2s}
+.tab.active{background:#38bdf8;color:#0f172a;font-weight:600}
+.tab:hover:not(.active){background:#334155}
+.panel{display:none;flex-direction:column;align-items:center;width:100%;max-width:550px;background:#1e293b;border-radius:0 0 10px 10px;padding:20px}
+.panel.active{display:flex}
+textarea{width:100%;height:120px;border:none;border-radius:10px;padding:12px;font-size:1rem;resize:none;margin-bottom:15px;background:#0f172a;color:#f1f5f9}
+button{background:#38bdf8;color:#0f172a;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:600;margin:5px;transition:.2s ease-in-out}
+button:hover{background:#0ea5e9}
+#outputEncode,#outputDecode{margin-top:15px;padding:12px;background:#0f172a;border-radius:10px;width:100%;word-wrap:break-word;font-family:monospace;font-size:.95rem}
+.copy-success{color:#22c55e;margin-top:8px;font-size:.9rem}pre{display:blcok;font-size:13px;color:rgba(255,255,255,.5);font-family:"Lucida Console", Monaco, monospace;}
+</style>
+</head>
+<body>
+<h1>🔐 Message Capsule Encoder & Decoder</h1>
+
+<div class="tabs">
+  <div id="tabEncode" class="tab active">Encode</div>
+  <div id="tabDecode" class="tab">Decode</div>
+</div>
+
+<div id="panelEncode" class="panel active">
+<pre>&lt;msg:UmVtZW1iZXIgdG8gb3BlbiB5b3VyIG1pbmQsIG5vdCBqdXN0IHlvdXIgZXllcy4=&gt;</pre>
+  <textarea id="inputEncode" placeholder="Type your message here..."></textarea>
+  <div>
+    <button id="btnEncode">Generate Capsule</button>
+    <button id="btnCopyEncode">Copy Code</button>
+  </div>
+  <div id="outputEncode"></div>
+  <div id="copyNoticeEncode" class="copy-success"></div>
+</div>
+
+<div id="panelDecode" class="panel">
+  <textarea id="inputDecode" placeholder="Paste your <msg:...> capsule here..."></textarea>
+  <div>
+    <button id="btnDecode">Decode Message</button>
+    <button id="btnCopyDecode">Copy Result</button>
+  </div>
+  <div id="outputDecode"></div>
+  <div id="copyNoticeDecode" class="copy-success"></div>
+</div>
+
+<script>
+const tabs={encode:{tab:document.getElementById("tabEncode"),panel:document.getElementById("panelEncode")},decode:{tab:document.getElementById("tabDecode"),panel:document.getElementById("panelDecode")}};
+const el=(id)=>document.getElementById(id);
+
+function switchTab(tab){Object.keys(tabs).forEach(k=>{tabs[k].tab.classList.toggle("active",k===tab);tabs[k].panel.classList.toggle("active",k===tab)})}
+
+function encodeMessage(){
+  const text=el("inputEncode").value.trim(),out=el("outputEncode"),note=el("copyNoticeEncode");
+  if(!text){out.textContent="⚠️ Please enter a message first.";note.textContent="";return;}
+  const encoded=btoa(unescape(encodeURIComponent(text)));
+  out.textContent=`<msg:${encoded}>`;note.textContent="";
+}
+
+function decodeMessage(){
+  const capsule=el("inputDecode").value.trim(),out=el("outputDecode"),note=el("copyNoticeDecode");
+  const match=capsule.match(/^<msg:(.+)>$/);
+  if(!match){out.textContent="⚠️ Invalid format. Use <msg:...>";note.textContent="";return;}
+  try{out.textContent=decodeURIComponent(escape(atob(match[1])));note.textContent="";}
+  catch{out.textContent="❌ Error decoding message. Make sure it's valid Base64.";}
+}
+
+function copyOutput(id){
+  const out=el(id).textContent,notice=id==="outputEncode"?"copyNoticeEncode":"copyNoticeDecode",note=el(notice);
+  if(!out){note.textContent="⚠️ Nothing to copy yet.";return;}
+  navigator.clipboard.writeText(out).then(()=>{note.textContent="✅ Copied!";setTimeout(()=>note.textContent="",2000)});
+}
+
+// Event listeners
+tabs.encode.tab.addEventListener("click",()=>switchTab("encode"));
+tabs.decode.tab.addEventListener("click",()=>switchTab("decode"));
+el("btnEncode").addEventListener("click",encodeMessage);
+el("btnCopyEncode").addEventListener("click",()=>copyOutput("outputEncode"));
+el("btnDecode").addEventListener("click",decodeMessage);
+el("btnCopyDecode").addEventListener("click",()=>copyOutput("outputDecode"));
+
+// Auto-detect capsule in encoder
+el("inputEncode").addEventListener("input",(e)=>{
+  const val=e.target.value.trim();
+  if(/^<msg:[A-Za-z0-9+/=]+>$/.test(val)){
+    el("inputDecode").value=val;
+    switchTab("decode");
+    setTimeout(decodeMessage,150);
+  }
+});
+</script>
+</body>
+</html>
+
+
