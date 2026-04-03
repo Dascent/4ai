@@ -52,4 +52,4 @@ Why it's secure: Even if a bot scrapes your page source, they only find encrypte
 📄 License
 This project is licensed under the GPL-2.0+ License.
 ---
-Created by [Dascent](https://)
+Created by [Dascent]([https://](https://github.com/Dascent))
